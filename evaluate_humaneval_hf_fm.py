@@ -354,6 +354,8 @@ def main():
                 print(f"\nOriginal prompt:\n{original_prompt}")
                 print(f"\nRaw model output:\n{raw[:600]}{'...' if len(raw) > 600 else ''}")
                 print(f"\nExtracted code:\n{code}")
+                print(f"\n--- Code repr (first 500 chars) ---")
+                print(repr(code[:500]))
                 status = "✓ PASSED" if result["passed"] else f"✗ FAILED: {result['result']}"
                 print(f"\nResult: {status}")
             
