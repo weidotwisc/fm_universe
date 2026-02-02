@@ -195,16 +195,30 @@ def test_completion(problem, completion):
 
 
 def main():
-    model_name = "/gpfs/users/weiz/ckpts/llama/llama-3.1-8b-instruct"
+    import argparse
+    parser = argparse.ArgumentParser(description="Debug HumanEval generations")
+    parser.add_argument(
+        "--model_name",
+        type=str,
+        default="/gpfs/users/weiz/ckpts/llama/llama-3.1-8b-instruct",
+        help="Path to local model checkpoint or HuggingFace model name",
+    )
+    parser.add_argument(
+        "--num_problems",
+        type=int,
+        default=5,
+        help="Number of problems to test",
+    )
+    args = parser.parse_args()
     
-    print("Loading model...")
-    model, tokenizer = load_model_and_tokenizer(model_name)
+    print(f"Loading model: {args.model_name}")
+    model, tokenizer = load_model_and_tokenizer(args.model_name)
     
     print("\nLoading HumanEval...")
     dataset = load_dataset("openai_humaneval", split="test")
     
     # Test on first few problems
-    test_problems = [0, 1, 2, 3, 4]
+    test_problems = list(range(args.num_problems))
     
     prompt_versions = [
         ("v1 (instruction)", create_prompt_v1, extract_code_v1),
