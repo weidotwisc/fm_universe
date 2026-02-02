@@ -1,0 +1,10 @@
+# Requirements for HumanEval evaluation with Llama-3.1-8B-Instruct
+torch>=2.0.0
+transformers>=4.40.0
+accelerate>=0.27.0
+datasets>=2.14.0
+numpy>=1.24.0
+bitsandbytes>=0.42.0  # For quantization (optional)
+
+# Note: The human-eval package has a broken setup.py for Python 3.12+
+# This script implements the evaluation logic directly instead.
