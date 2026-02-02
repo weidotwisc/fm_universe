@@ -53,13 +53,11 @@ def create_prompt_v1(problem: dict) -> str:
 
 Provide only the completion code:"""
 
-    prompt = f"""<|begin_of_text|><|start_header_id|>system<|end_header_id|>
-
-{system_message}<|eot_id|><|start_header_id|>user<|end_header_id|>
-
-{user_message}<|eot_id|><|start_header_id|>assistant<|end_header_id|}
-
-"""
+    prompt = (
+        "<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n"
+        f"{system_message}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n"
+        f"{user_message}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n"
+    )
     return prompt
 
 
@@ -68,13 +66,11 @@ def create_prompt_v2(problem: dict) -> str:
     function_signature = problem["prompt"]
     
     # Just ask for completion directly
-    prompt = f"""<|begin_of_text|><|start_header_id|>user<|end_header_id|>
-
-Complete this Python function:
-
-{function_signature}<|eot_id|><|start_header_id|>assistant<|end_header_id|>
-
-"""
+    prompt = (
+        "<|begin_of_text|><|start_header_id|>user<|end_header_id|>\n\n"
+        f"Complete this Python function:\n\n{function_signature}"
+        "<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n"
+    )
     return prompt
 
 
