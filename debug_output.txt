@@ -1,0 +1,718 @@
+Loading model: /weiz-bucket/ckpts/llama/llama-3.1-8b-instruct
+Loading model: /weiz-bucket/ckpts/llama/llama-3.1-8b-instruct
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:07,  2.46s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:04<00:04,  2.32s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:06<00:02,  2.27s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.72s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.94s/it]
+
+Loading HumanEval...
+
+================================================================================
+Problem: HumanEval/0
+================================================================================
+
+Original prompt:
+from typing import List
+
+
+def has_close_elements(numbers: List[float], threshold: float) -> bool:
+    """ Check if in given list of numbers, are any two numbers closer to each other than
+    given threshold.
+    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)
+    False
+    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)
+    True
+    """
+
+
+Canonical solution:
+    for idx, elem in enumerate(numbers):
+        for idx2, elem2 in enumerate(numbers):
+            if idx != idx2:
+                distance = abs(elem - elem2)
+                if distance < threshold:
+                    return True
+
+    return False
+
+
+Entry point: has_close_elements
+
+--- Testing v1 (instruction) ---
+
+Raw model output (first 1000 chars):
+<|begin_of_text|><|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+You are an expert Python programmer. Complete the given Python function. Only output the completion code that should come after the function signature and docstring. Do not repeat the function signature or docstring. Do not include any explanation, just the code.<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Complete the following Python function. Only provide the function body (the code that comes after the docstring). Do not repeat the function signature or docstring.
+
+```python
+from typing import List
+
+
+def has_close_elements(numbers: List[float], threshold: float) -> bool:
+    """ Check if in given list of numbers, are any two numbers closer to each other than
+    given threshold.
+    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)
+    False
+    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)
+    True
+    """
+
+```
+
+Provide only the completion code:<|eot_id|><|start_header_id|>assistant<|end_
+
+Extracted completion:
+<|begin_of_text|><|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+You are an expert Python programmer. Complete the given Python function. Only output the completion code that should come after the function signature and docstring. Do not repeat the function signature or docstring. Do not include any explanation, just the code.
+
+Full code to execute:
+from typing import List
+
+
+def has_close_elements(numbers: List[float], threshold: float) -> bool:
+    """ Check if in given list of numbers, are any two numbers closer to each other than
+    given threshold.
+    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)
+    False
+    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)
+    True
+    """
+<|begin_of_text|><|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+You are an expert Python programmer. Complete the given Python function. Only output the completion code that should come after the function signature and docstring. Do not repeat the function signature or docstring. Do not include any explanation, just the code.
+
+Test result: SyntaxError: invalid syntax (<string>, line 12)
+----------------------------------------
+
+--- Testing v2 (simpler chat) ---
+
+Raw model output (first 1000 chars):
+<|begin_of_text|><|begin_of_text|><|start_header_id|>user<|end_header_id|>
+
+Complete this Python function:
+
+from typing import List
+
+
+def has_close_elements(numbers: List[float], threshold: float) -> bool:
+    """ Check if in given list of numbers, are any two numbers closer to each other than
+    given threshold.
+    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)
+    False
+    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)
+    True
+    """
+<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+Here is the completed function:
+
+```python
+from typing import List
+
+def has_close_elements(numbers: List[float], threshold: float) -> bool:
+    """
+    Check if in given list of numbers, are any two numbers closer to each other than given threshold.
+
+    Args:
+        numbers (List[float]): A list of floating point numbers.
+        threshold (float): The minimum distance between two numbers to be considered close.
+
+    Returns:
+        bool: True if any two numbers are closer than t
+
+Extracted completion:
+<|begin_of_text|><|begin_of_text|><|start_header_id|>user<|end_header_id|>
+
+Complete this Python function:
+
+from typing import List
+
+Full code to execute:
+from typing import List
+
+
+def has_close_elements(numbers: List[float], threshold: float) -> bool:
+    """ Check if in given list of numbers, are any two numbers closer to each other than
+    given threshold.
+    >>> has_close_elements([1.0, 2.0, 3.0], 0.5)
+    False
+    >>> has_close_elements([1.0, 2.8, 3.0, 4.0, 5.0, 2.0], 0.3)
+    True
+    """
+<|begin_of_text|><|begin_of_text|><|start_header_id|>user<|end_header_id|>
+
+Complete this Python function:
+
+from typing import List
+
+Test result: SyntaxError: invalid syntax (<string>, line 12)
+----------------------------------------
+
+================================================================================
+Problem: HumanEval/1
+================================================================================
+
+Original prompt:
+from typing import List
+
+
+def separate_paren_groups(paren_string: str) -> List[str]:
+    """ Input to this function is a string containing multiple groups of nested parentheses. Your goal is to
+    separate those group into separate strings and return the list of those.
+    Separate groups are balanced (each open brace is properly closed) and not nested within each other
+    Ignore any spaces in the input string.
+    >>> separate_paren_groups('( ) (( )) (( )( ))')
+    ['()', '(())', '(()())']
+    """
+
+
+Canonical solution:
+    result = []
+    current_string = []
+    current_depth = 0
+
+    for c in paren_string:
+        if c == '(':
+            current_depth += 1
+            current_string.append(c)
+        elif c == ')':
+            current_depth -= 1
+            current_string.append(c)
+
+            if current_depth == 0:
+                result.append(''.join(current_string))
+                current_string.clear()
+
+    return result
+
+
+Entry point: separate_paren_groups
+
+--- Testing v1 (instruction) ---
+
+Raw model output (first 1000 chars):
+<|begin_of_text|><|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+You are an expert Python programmer. Complete the given Python function. Only output the completion code that should come after the function signature and docstring. Do not repeat the function signature or docstring. Do not include any explanation, just the code.<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Complete the following Python function. Only provide the function body (the code that comes after the docstring). Do not repeat the function signature or docstring.
+
+```python
+from typing import List
+
+
+def separate_paren_groups(paren_string: str) -> List[str]:
+    """ Input to this function is a string containing multiple groups of nested parentheses. Your goal is to
+    separate those group into separate strings and return the list of those.
+    Separate groups are balanced (each open brace is properly closed) and not nested within each other
+    Ignore any spaces in the input string.
+    >>> separa
+
+Extracted completion:
+<|begin_of_text|><|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+You are an expert Python programmer. Complete the given Python function. Only output the completion code that should come after the function signature and docstring. Do not repeat the function signature or docstring. Do not include any explanation, just the code.
+
+Full code to execute:
+from typing import List
+
+
+def separate_paren_groups(paren_string: str) -> List[str]:
+    """ Input to this function is a string containing multiple groups of nested parentheses. Your goal is to
+    separate those group into separate strings and return the list of those.
+    Separate groups are balanced (each open brace is properly closed) and not nested within each other
+    Ignore any spaces in the input string.
+    >>> separate_paren_groups('( ) (( )) (( )( ))')
+    ['()', '(())', '(()())']
+    """
+<|begin_of_text|><|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+You are an expert Python programmer. Complete the given Python function. Only output the completion code that should come after the function signature and docstring. Do not repeat the function signature or docstring. Do not include any explanation, just the code.
+
+Test result: SyntaxError: invalid syntax (<string>, line 12)
+----------------------------------------
+
+--- Testing v2 (simpler chat) ---
+
+Raw model output (first 1000 chars):
+<|begin_of_text|><|begin_of_text|><|start_header_id|>user<|end_header_id|>
+
+Complete this Python function:
+
+from typing import List
+
+
+def separate_paren_groups(paren_string: str) -> List[str]:
+    """ Input to this function is a string containing multiple groups of nested parentheses. Your goal is to
+    separate those group into separate strings and return the list of those.
+    Separate groups are balanced (each open brace is properly closed) and not nested within each other
+    Ignore any spaces in the input string.
+    >>> separate_paren_groups('( ) (( )) (( )( ))')
+    ['()', '(())', '(()())']
+    """
+<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+Here is the Python function that solves the problem:
+
+```python
+from typing import List
+
+def separate_paren_groups(paren_string: str) -> List[str]:
+    """
+    Separate groups of nested parentheses in a string into individual strings.
+
+    Args:
+    paren_string (str): A string containing multiple groups of nested parentheses.
+
+
+Extracted completion:
+<|begin_of_text|><|begin_of_text|><|start_header_id|>user<|end_header_id|>
+
+Complete this Python function:
+
+from typing import List
+
+Full code to execute:
+from typing import List
+
+
+def separate_paren_groups(paren_string: str) -> List[str]:
+    """ Input to this function is a string containing multiple groups of nested parentheses. Your goal is to
+    separate those group into separate strings and return the list of those.
+    Separate groups are balanced (each open brace is properly closed) and not nested within each other
+    Ignore any spaces in the input string.
+    >>> separate_paren_groups('( ) (( )) (( )( ))')
+    ['()', '(())', '(()())']
+    """
+<|begin_of_text|><|begin_of_text|><|start_header_id|>user<|end_header_id|>
+
+Complete this Python function:
+
+from typing import List
+
+Test result: SyntaxError: invalid syntax (<string>, line 12)
+----------------------------------------
+
+================================================================================
+Problem: HumanEval/2
+================================================================================
+
+Original prompt:
+
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+
+
+Canonical solution:
+    return number % 1.0
+
+
+Entry point: truncate_number
+
+--- Testing v1 (instruction) ---
+
+Raw model output (first 1000 chars):
+<|begin_of_text|><|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+You are an expert Python programmer. Complete the given Python function. Only output the completion code that should come after the function signature and docstring. Do not repeat the function signature or docstring. Do not include any explanation, just the code.<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Complete the following Python function. Only provide the function body (the code that comes after the docstring). Do not repeat the function signature or docstring.
+
+```python
+
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+
+```
+
+Provide only the completion code:<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+def 
+
+Extracted completion:
+<|begin_of_text|><|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+You are an expert Python programmer. Complete the given Python function. Only output the completion code that should come after the function signature and docstring. Do not repeat the function signature or docstring. Do not include any explanation, just the code.
+
+Full code to execute:
+
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+<|begin_of_text|><|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+You are an expert Python programmer. Complete the given Python function. Only output the completion code that should come after the function signature and docstring. Do not repeat the function signature or docstring. Do not include any explanation, just the code.
+
+Test result: SyntaxError: invalid syntax (<string>, line 12)
+----------------------------------------
+
+--- Testing v2 (simpler chat) ---
+
+Raw model output (first 1000 chars):
+<|begin_of_text|><|begin_of_text|><|start_header_id|>user<|end_header_id|>
+
+Complete this Python function:
+
+
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+Here is the Python function that meets the requirements:
+
+```python
+def truncate_number(number: float) -> float:
+    """
+    Given a positive floating point number, it can be decomposed into
+    an integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+
+    Args:
+        number (float): A positive floating point number.
+
+    Returns:
+        float: The decimal part of the number.
+
+    Examples:
+    
+
+Extracted completion:
+<|begin_of_text|><|begin_of_text|><|start_header_id|>user<|end_header_id|>
+
+Complete this Python function:
+
+Full code to execute:
+
+
+def truncate_number(number: float) -> float:
+    """ Given a positive floating point number, it can be decomposed into
+    and integer part (largest integer smaller than given number) and decimals
+    (leftover part always smaller than 1).
+
+    Return the decimal part of the number.
+    >>> truncate_number(3.5)
+    0.5
+    """
+<|begin_of_text|><|begin_of_text|><|start_header_id|>user<|end_header_id|>
+
+Complete this Python function:
+
+Test result: SyntaxError: invalid syntax (<string>, line 12)
+----------------------------------------
+
+================================================================================
+Problem: HumanEval/3
+================================================================================
+
+Original prompt:
+from typing import List
+
+
+def below_zero(operations: List[int]) -> bool:
+    """ You're given a list of deposit and withdrawal operations on a bank account that starts with
+    zero balance. Your task is to detect if at any point the balance of account fallls below zero, and
+    at that point function should return True. Otherwise it should return False.
+    >>> below_zero([1, 2, 3])
+    False
+    >>> below_zero([1, 2, -4, 5])
+    True
+    """
+
+
+Canonical solution:
+    balance = 0
+
+    for op in operations:
+        balance += op
+        if balance < 0:
+            return True
+
+    return False
+
+
+Entry point: below_zero
+
+--- Testing v1 (instruction) ---
+
+Raw model output (first 1000 chars):
+<|begin_of_text|><|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+You are an expert Python programmer. Complete the given Python function. Only output the completion code that should come after the function signature and docstring. Do not repeat the function signature or docstring. Do not include any explanation, just the code.<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Complete the following Python function. Only provide the function body (the code that comes after the docstring). Do not repeat the function signature or docstring.
+
+```python
+from typing import List
+
+
+def below_zero(operations: List[int]) -> bool:
+    """ You're given a list of deposit and withdrawal operations on a bank account that starts with
+    zero balance. Your task is to detect if at any point the balance of account fallls below zero, and
+    at that point function should return True. Otherwise it should return False.
+    >>> below_zero([1, 2, 3])
+    False
+    >>> below_zero([1, 2, -4, 5])
+
+
+Extracted completion:
+<|begin_of_text|><|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+You are an expert Python programmer. Complete the given Python function. Only output the completion code that should come after the function signature and docstring. Do not repeat the function signature or docstring. Do not include any explanation, just the code.
+
+Full code to execute:
+from typing import List
+
+
+def below_zero(operations: List[int]) -> bool:
+    """ You're given a list of deposit and withdrawal operations on a bank account that starts with
+    zero balance. Your task is to detect if at any point the balance of account fallls below zero, and
+    at that point function should return True. Otherwise it should return False.
+    >>> below_zero([1, 2, 3])
+    False
+    >>> below_zero([1, 2, -4, 5])
+    True
+    """
+<|begin_of_text|><|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+You are an expert Python programmer. Complete the given Python function. Only output the completion code that should come after the function signature and docstring. Do not repeat the function signature or docstring. Do not include any explanation, just the code.
+
+Test result: SyntaxError: invalid syntax (<string>, line 13)
+----------------------------------------
+
+--- Testing v2 (simpler chat) ---
+
+Raw model output (first 1000 chars):
+<|begin_of_text|><|begin_of_text|><|start_header_id|>user<|end_header_id|>
+
+Complete this Python function:
+
+from typing import List
+
+
+def below_zero(operations: List[int]) -> bool:
+    """ You're given a list of deposit and withdrawal operations on a bank account that starts with
+    zero balance. Your task is to detect if at any point the balance of account fallls below zero, and
+    at that point function should return True. Otherwise it should return False.
+    >>> below_zero([1, 2, 3])
+    False
+    >>> below_zero([1, 2, -4, 5])
+    True
+    """
+<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+Here is the completed Python function:
+
+```python
+from typing import List
+
+def below_zero(operations: List[int]) -> bool:
+    """
+    This function checks if at any point the balance of a bank account falls below zero.
+
+    Args:
+        operations (List[int]): A list of deposit and withdrawal operations on a bank account.
+
+    Returns:
+        bool: True if the balance falls below ze
+
+Extracted completion:
+<|begin_of_text|><|begin_of_text|><|start_header_id|>user<|end_header_id|>
+
+Complete this Python function:
+
+from typing import List
+
+Full code to execute:
+from typing import List
+
+
+def below_zero(operations: List[int]) -> bool:
+    """ You're given a list of deposit and withdrawal operations on a bank account that starts with
+    zero balance. Your task is to detect if at any point the balance of account fallls below zero, and
+    at that point function should return True. Otherwise it should return False.
+    >>> below_zero([1, 2, 3])
+    False
+    >>> below_zero([1, 2, -4, 5])
+    True
+    """
+<|begin_of_text|><|begin_of_text|><|start_header_id|>user<|end_header_id|>
+
+Complete this Python function:
+
+from typing import List
+
+Test result: SyntaxError: invalid syntax (<string>, line 13)
+----------------------------------------
+
+================================================================================
+Problem: HumanEval/4
+================================================================================
+
+Original prompt:
+from typing import List
+
+
+def mean_absolute_deviation(numbers: List[float]) -> float:
+    """ For a given list of input numbers, calculate Mean Absolute Deviation
+    around the mean of this dataset.
+    Mean Absolute Deviation is the average absolute difference between each
+    element and a centerpoint (mean in this case):
+    MAD = average | x - x_mean |
+    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])
+    1.0
+    """
+
+
+Canonical solution:
+    mean = sum(numbers) / len(numbers)
+    return sum(abs(x - mean) for x in numbers) / len(numbers)
+
+
+Entry point: mean_absolute_deviation
+
+--- Testing v1 (instruction) ---
+
+Raw model output (first 1000 chars):
+<|begin_of_text|><|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+You are an expert Python programmer. Complete the given Python function. Only output the completion code that should come after the function signature and docstring. Do not repeat the function signature or docstring. Do not include any explanation, just the code.<|eot_id|><|start_header_id|>user<|end_header_id|>
+
+Complete the following Python function. Only provide the function body (the code that comes after the docstring). Do not repeat the function signature or docstring.
+
+```python
+from typing import List
+
+
+def mean_absolute_deviation(numbers: List[float]) -> float:
+    """ For a given list of input numbers, calculate Mean Absolute Deviation
+    around the mean of this dataset.
+    Mean Absolute Deviation is the average absolute difference between each
+    element and a centerpoint (mean in this case):
+    MAD = average | x - x_mean |
+    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])
+    1.0
+    """
+
+
+
+Extracted completion:
+<|begin_of_text|><|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+You are an expert Python programmer. Complete the given Python function. Only output the completion code that should come after the function signature and docstring. Do not repeat the function signature or docstring. Do not include any explanation, just the code.
+
+Full code to execute:
+from typing import List
+
+
+def mean_absolute_deviation(numbers: List[float]) -> float:
+    """ For a given list of input numbers, calculate Mean Absolute Deviation
+    around the mean of this dataset.
+    Mean Absolute Deviation is the average absolute difference between each
+    element and a centerpoint (mean in this case):
+    MAD = average | x - x_mean |
+    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])
+    1.0
+    """
+<|begin_of_text|><|begin_of_text|><|start_header_id|>system<|end_header_id|>
+
+You are an expert Python programmer. Complete the given Python function. Only output the completion code that should come after the function signature and docstring. Do not repeat the function signature or docstring. Do not include any explanation, just the code.
+
+Test result: SyntaxError: invalid syntax (<string>, line 13)
+----------------------------------------
+
+--- Testing v2 (simpler chat) ---
+
+Raw model output (first 1000 chars):
+<|begin_of_text|><|begin_of_text|><|start_header_id|>user<|end_header_id|>
+
+Complete this Python function:
+
+from typing import List
+
+
+def mean_absolute_deviation(numbers: List[float]) -> float:
+    """ For a given list of input numbers, calculate Mean Absolute Deviation
+    around the mean of this dataset.
+    Mean Absolute Deviation is the average absolute difference between each
+    element and a centerpoint (mean in this case):
+    MAD = average | x - x_mean |
+    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])
+    1.0
+    """
+<|eot_id|><|start_header_id|>assistant<|end_header_id|>
+
+Here is the completed function:
+
+```python
+from typing import List
+import statistics
+
+def mean_absolute_deviation(numbers: List[float]) -> float:
+    """ For a given list of input numbers, calculate Mean Absolute Deviation
+    around the mean of this dataset.
+    Mean Absolute Deviation is the average absolute difference between each
+    element and a centerpoint (mean in this case):
+    MAD = average 
+
+Extracted completion:
+<|begin_of_text|><|begin_of_text|><|start_header_id|>user<|end_header_id|>
+
+Complete this Python function:
+
+from typing import List
+
+Full code to execute:
+from typing import List
+
+
+def mean_absolute_deviation(numbers: List[float]) -> float:
+    """ For a given list of input numbers, calculate Mean Absolute Deviation
+    around the mean of this dataset.
+    Mean Absolute Deviation is the average absolute difference between each
+    element and a centerpoint (mean in this case):
+    MAD = average | x - x_mean |
+    >>> mean_absolute_deviation([1.0, 2.0, 3.0, 4.0])
+    1.0
+    """
+<|begin_of_text|><|begin_of_text|><|start_header_id|>user<|end_header_id|>
+
+Complete this Python function:
+
+from typing import List
+
+Test result: SyntaxError: invalid syntax (<string>, line 13)
+----------------------------------------
