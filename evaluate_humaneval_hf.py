@@ -305,13 +305,16 @@ def main():
     } for p in dataset}
     
     samples = []
-    total = len(dataset)
+    total = len(dataset) if not args.debug else 5  # Only 5 problems in debug mode
     passed_count = 0
     
     print(f"Generating completions for {total} problems...")
     print(f"Settings: temperature={args.temperature}, max_new_tokens={args.max_new_tokens}")
     
     for idx, problem in enumerate(dataset):
+        if idx >= total:
+            break
+            
         task_id = problem["task_id"]
         original_prompt = problem["prompt"]
         entry_point = problem["entry_point"]
@@ -330,7 +333,7 @@ def main():
             code = extract_code_from_response(raw, entry_point, original_prompt)
             
             # Debug output
-            if args.debug and idx < 5:
+            if args.debug:
                 print(f"\n{'='*70}")
                 print(f"Problem {idx}: {task_id}")
                 print(f"{'='*70}")
@@ -347,11 +350,13 @@ def main():
             
             samples.append({"task_id": task_id, "completion": code})
         
-        if (idx + 1) % 20 == 0:
+        if not args.debug and (idx + 1) % 20 == 0:
             print(f"Progress: {idx + 1}/{total}")
     
     if args.debug:
-        print(f"\n[Debug] Passed {passed_count}/5 of first 5 problems")
+        print(f"\n{'='*70}")
+        print(f"[Debug Summary] Passed {passed_count}/{total} problems")
+        print(f"{'='*70}")
         return
     
     # Save and evaluate
