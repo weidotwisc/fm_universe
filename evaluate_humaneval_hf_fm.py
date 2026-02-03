@@ -190,8 +190,22 @@ def extract_code_from_response(response: str, entry_point: str, original_prompt:
         if docstring_match:
             body = body[docstring_match.end():]
         
-        # The body should already be indented; just append to original prompt
-        # Original prompt ends with the docstring and newline, body continues from there
+        # Fix indentation: ensure all lines have consistent 4-space indent
+        # The model sometimes outputs first line without indent, rest with indent
+        lines = body.split('\n')
+        fixed_lines = []
+        
+        for line in lines:
+            if not line.strip():  # Empty line
+                fixed_lines.append('')
+            elif not line[0].isspace():  # Line has no indentation but should have
+                fixed_lines.append('    ' + line)
+            else:
+                fixed_lines.append(line)
+        
+        body = '\n'.join(fixed_lines)
+        
+        # Combine with original prompt
         full_code = original_prompt.rstrip() + '\n' + body
         
         return full_code.strip()
